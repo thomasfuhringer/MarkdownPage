@@ -1,5 +1,5 @@
 # Browser for Markdown Pages
-# Thomas Führinger, 2022, github.com/thomasfuhringer/markdownpage
+# Thomas Führinger, 2022, https://github.com/thomasfuhringer/MarkdownPage
 
 import tymber as ty # https://github.com/thomasfuhringer/tymber
 import pickle, zipfile, os, shutil, pathlib, socket, io, sys
@@ -264,7 +264,9 @@ def menu_item_about__on_click():
     window = ty.Window("About Markdown Page", width = 320, height = 240)
     window.icon = icon
     ty.Label(window, "1", 40, 50, -40, 22, "By Thomas Führinger, 2022")
-    ty.Label(window, "2", 40, 70, -40, 22, "Version 0.1")
+    ty.Label(window, "2", 40, 70, -40, 22, "https://github.com/thomasfuhringer/MarkdownPage")
+    ty.Label(window, "3", 40, 90, -40, 22, "Version 0.1")
+    
     window.run()
 
 def button_get__on_click(self):

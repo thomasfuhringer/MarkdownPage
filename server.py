@@ -1,5 +1,5 @@
 # Server for Markdown Pages
-# Thomas Führinger, 2022-06-07, github.com/thomasfuhringer/markdownpage
+# Thomas Führinger, 2022-06-07, https://github.com/thomasfuhringer/MarkdownPage
 
 """
 Protocol:
@@ -168,5 +168,4 @@ class Session(threading.Thread):
         return b"0" + len(page_str).to_bytes(4, byteorder="big") + page_str + len(path_bytes).to_bytes(2, byteorder="big") + path_bytes + subpages_count.to_bytes(2, byteorder="big") + subpages
 
 server = Server()
-# server = Server("45.76.133.182")
 server.run()

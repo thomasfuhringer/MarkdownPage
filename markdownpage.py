@@ -135,11 +135,19 @@ def get_page(address):
 def save_state():
     position = ty.app.window.position
     ty.set_setting("MakrDownPage", "Browser", "WindowPos", pickle.dumps(position))
+    ty.set_setting("MakrDownPage", "Browser", "SplitterH", pickle.dumps(splitter_horizontal.position))
+    ty.set_setting("MakrDownPage", "Browser", "SplitterV", pickle.dumps(splitter_vertical.position))
 
 def load_state():
     pos_bytes = ty.get_setting("MakrDownPage", "Browser", "WindowPos")
+    splitter_h_bytes = ty.get_setting("MakrDownPage", "Browser", "SplitterH")
+    splitter_v_bytes = ty.get_setting("MakrDownPage", "Browser", "SplitterV")
     if pos_bytes is not None:
         ty.app.window.position = pickle.loads(pos_bytes)
+    if splitter_h_bytes is not None:
+        splitter_horizontal.position = pickle.loads(splitter_h_bytes)
+    if splitter_v_bytes is not None:
+        splitter_vertical.position = pickle.loads(splitter_v_bytes)
 
 def window__before_close(self):
     save_state()

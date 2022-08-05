@@ -311,7 +311,7 @@ def attachments_listview__on_double_click(self, row):
         shutil.copy2(os.path.join(tmp_directory, attachments_list[row][0]), file_name)
         status_bar.set_text("Attachment saved as '" + file_name + "'")
         
-def execute_code():
+def execute_code():     # experimental
     if run_code and os.path.exists(tmp_directory + "\Code.py"):
         import Code
         Code.main()
@@ -384,5 +384,14 @@ navigation_stack = []
 navigation_stack_index = -1
 page_open = None
 page_open_name = None
+
+if len(sys.argv) > 1:
+    print(sys.argv[1])
+    address = sys.argv[1]
+    if address[-4:].lower() == ".mdp":
+        open_page(address)
+    else:
+        entry_path.data = address
+        button_get__on_click(None)
 
 app.run()

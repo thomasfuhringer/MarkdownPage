@@ -2,7 +2,7 @@
 # Thomas Führinger, 2022, https://github.com/thomasfuhringer/MarkdownPage
 
 import tymber as ty # https://github.com/thomasfuhringer/tymber
-import pickle, zipfile, os, shutil, pathlib, socket, io, sys
+import pickle, zipfile, os, shutil, pathlib, socket, io, sys, webbrowser
 
 #default_host = "localhost"
 default_host = "45.76.133.182"
@@ -311,7 +311,23 @@ def attachments_listview__on_double_click(self, row):
         shutil.copy2(os.path.join(tmp_directory, attachments_list[row][0]), file_name)
         status_bar.set_text("Attachment saved as '" + file_name + "'")
         
-def execute_code():     # experimental
+def text_view__on_click_link(self, link):
+    if link[:4] == "http" or link[:5] == "https":
+        webbrowser.open(link, new=2)
+    else:
+        if link[:2] == "./":
+            entry_path.data += link[1:]
+        elif link[:3] == "../":        
+            address = entry_path.data
+            separator = address.rfind("/")
+            if  separator == -1:
+                return
+            entry_path.data = address[:separator] + link[2:]
+        else:
+            entry_path.data = link
+        button_get__on_click(None)
+        
+def execute_code():
     if run_code and os.path.exists(tmp_directory + "\Code.py"):
         import Code
         Code.main()
@@ -372,6 +388,7 @@ attachments_listview.on_double_click = attachments_listview__on_double_click
 
 text_view =ty.TextView(splitter_vertical.box2, "text_view", 0, 0, 0, 0)
 text_view.margin = 20
+text_view.on_click_link = text_view__on_click_link
 
 load_state()
 
@@ -386,7 +403,6 @@ page_open = None
 page_open_name = None
 
 if len(sys.argv) > 1:
-    print(sys.argv[1])
     address = sys.argv[1]
     if address[-4:].lower() == ".mdp":
         open_page(address)

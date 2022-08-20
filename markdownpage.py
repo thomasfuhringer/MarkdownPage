@@ -169,10 +169,10 @@ def open_page(file_name):
     text = pathlib.Path(os.path.join(tmp_directory, "Text.md")).read_text(encoding="utf-8")
     text_view.data = (text, tmp_directory)
     set_window_caption(file_name)
-    
+
     listview_subpage.data = None
     subpage_list.clear()
-    
+
     attachments_listview.data = None
     attachments_list.clear()
     with os.scandir(tmp_directory) as iterator:
@@ -274,7 +274,7 @@ def menu_item_about__on_click():
     ty.Label(window, "1", 40, 50, -40, 22, "By Thomas Führinger, 2022")
     ty.Label(window, "2", 40, 70, -40, 22, "https://github.com/thomasfuhringer/MarkdownPage")
     ty.Label(window, "3", 40, 90, -40, 22, "Version 0.1")
-    
+
     window.run()
 
 def button_get__on_click(self):
@@ -310,14 +310,20 @@ def attachments_listview__on_double_click(self, row):
     if file_name:
         shutil.copy2(os.path.join(tmp_directory, attachments_list[row][0]), file_name)
         status_bar.set_text("Attachment saved as '" + file_name + "'")
-        
+
 def text_view__on_click_link(self, link):
     if link[:4] == "http" or link[:5] == "https":
         webbrowser.open(link, new=2)
     else:
-        if link[:2] == "./":
+        if link[:1] == "/":
+            address = entry_path.data
+            separator = address.find("/")
+            if  separator == -1:
+                return
+            entry_path.data = address[:separator] + link
+        elif link[:2] == "./":
             entry_path.data += link[1:]
-        elif link[:3] == "../":        
+        elif link[:3] == "../":
             address = entry_path.data
             separator = address.rfind("/")
             if  separator == -1:
@@ -326,7 +332,7 @@ def text_view__on_click_link(self, link):
         else:
             entry_path.data = link
         button_get__on_click(None)
-        
+
 def execute_code():
     if run_code and os.path.exists(tmp_directory + "\Code.py"):
         import Code

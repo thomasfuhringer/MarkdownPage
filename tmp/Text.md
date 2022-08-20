@@ -1,3 +1,3 @@
-# Thomas Führinger
-My personal home page  
-![Thomas Führinger](Thomas Führinger.jpg)
+# Lehrer Lämpel
+Und *das* ist wieder ein **Exempel**!  
+![Lehrer](Lehrer Lämpel.jpg)
